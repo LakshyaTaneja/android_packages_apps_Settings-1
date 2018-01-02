@@ -18,24 +18,24 @@ package com.android.settings.deviceinfo;
 import android.content.Context;
 import android.os.SystemProperties;
 import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceScreen;
-import android.text.TextUtils;
 
 import com.android.settings.R;
-import com.android.settings.core.PreferenceController;
+import com.android.settings.Utils;
+import com.android.settingslib.core.AbstractPreferenceController;
 
-public class ElixirVersionPreferenceController extends PreferenceController {
+public class ElixirVersionPreferenceController extends AbstractPreferenceController {
 
-    private static final String PROPERTY_ELIXIR_VERSION = "ro.elixir.version";
+    private static final String ELIXIR_PROPERTY = "ro.elixir.version";
     private static final String KEY_ELIXIR_VERSION = "elixir_version";
 
     public ElixirVersionPreferenceController(Context context) {
         super(context);
     }
 
+
     @Override
     public boolean isAvailable() {
-        return !TextUtils.isEmpty(SystemProperties.get(PROPERTY_ELIXIR_VERSION));
+        return true;
     }
 
     @Override
@@ -44,14 +44,9 @@ public class ElixirVersionPreferenceController extends PreferenceController {
     }
 
     @Override
-    public void displayPreference(PreferenceScreen screen) {
-        super.displayPreference(screen);
-        final Preference pref = screen.findPreference(KEY_ELIXIR_VERSION);
-        if (pref != null) {
-            final String summary = SystemProperties.get(PROPERTY_ELIXIR_VERSION,
-                    mContext.getResources().getString(R.string.elixir_version_default));
-            pref.setSummary(summary);
-        }
+    public void updateState(Preference preference) {
+        super.updateState(preference);
+        preference.setSummary(SystemProperties.get(ELIXIR_PROPERTY,
+                mContext.getResources().getString(R.string.device_info_default)));
     }
 }
-
