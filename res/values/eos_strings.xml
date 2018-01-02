@@ -18,4 +18,8 @@
     <!-- ElixirOS version -->
     <string name="elixir_version">ElixirOS version</string>
     <string name="elixir_version_default">Unknown</string>
+
+    <!-- Launch Dev Tools -->
+    <string name="development_tools_title">Development tools</string>
+
 </resources>
